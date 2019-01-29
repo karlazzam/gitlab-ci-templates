@@ -16,7 +16,7 @@ plan:
   - export AWS_SECRET_ACCESS_KEY=$SECRET_KEY
   - terraform init
   script:
-    - terraform plan
+    - terraform plan -out "planfile"
   artifacts:
     paths:
       - planfile
