@@ -3,7 +3,7 @@ services:
   - docker:dind
 variables:
   DOCKER_DRIVER: overlay
-  APP_NAME: replace_me
+  APP_NAME: REPLACE_ME
 stages:
   - build-docker
 docker_build:
