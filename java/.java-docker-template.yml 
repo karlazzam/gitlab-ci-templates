@@ -1,0 +1,19 @@
+image: docker:latest
+services:
+  - docker:dind
+variables:
+  DOCKER_DRIVER: overlay
+  APP_NAME: replace_me
+stages:
+  - build-docker
+docker_build:
+  stage: build-docker
+  script:
+  - echo "Logging in to docker"
+  - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin registry.gitlab.com
+  - cp -R target docker/target
+  - echo "Building docker image"
+  - docker build -t registry.gitlab.com/karlazzam/$APP_NAME ./docker
+  - echo "Pushing docker image"
+  - docker push registry.gitlab.com/karlazzam/$APP_NAME
+
