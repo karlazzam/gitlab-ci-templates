@@ -1,0 +1,17 @@
+image: docker:latest
+services:
+  - docker:dind
+variables:
+  DOCKER_DRIVER: overlay
+stages:
+  - build-maven
+maven_build:
+  image: maven:latest
+  stage: build-maven
+  script:
+    - echo "Building project with maven"
+    - "mvn package -B"
+  artifacts:
+    paths:
+      - target/*.jar
+  retry: 2
