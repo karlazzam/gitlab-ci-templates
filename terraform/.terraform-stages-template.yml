@@ -14,6 +14,8 @@ stages:
   - plan
 
 plan:
+  image:
+    name: hashicorp/terraform:light
   stage: plan
   script:
     - terraform plan
