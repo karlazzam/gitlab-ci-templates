@@ -5,6 +5,7 @@ image:
     - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 stages:
   - plan
+  - apply
 
 plan:
   stage: plan
@@ -19,3 +20,10 @@ plan:
   artifacts:
     paths:
       - planfile
+apply:
+  stage: apply
+  script:
+    - terraform apply -input=false "planfile"
+  dependencies:
+    - plan
+  when: manual
