@@ -7,6 +7,7 @@ variables:
 stages:
   - build-docker
 docker_build:
+  image: docker:latest
   stage: build-docker
   script:
   - echo "Logging in to docker"
