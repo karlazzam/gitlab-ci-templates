@@ -16,3 +16,6 @@ plan:
   - terraform init
   script:
     - terraform plan
+  artifacts:
+    paths:
+      - planfile
