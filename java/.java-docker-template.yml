@@ -25,6 +25,6 @@ docker_build:
     changes:
       - pom.xml
       - docker/Dockerfile
-      -.gitlab-ci.yml 
+      - .gitlab-ci.yml 
 
 
