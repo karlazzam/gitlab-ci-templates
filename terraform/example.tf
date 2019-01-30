@@ -1,6 +1,6 @@
 resource "aws_instance" "example" {
-  ami           = "ami-cc7551a9"
-  instance_type = "t2.micro"
+  ami           = "${var.ami_id}"
+  instance_type = "${var.instance_type}"
 }
 
 resource "aws_eip" "ip" {
