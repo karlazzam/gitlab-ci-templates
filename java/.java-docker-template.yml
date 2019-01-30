@@ -17,9 +17,9 @@ docker_build:
   - docker build -t registry.gitlab.com/karlazzam/$APP_NAME ./docker
   - echo "Pushing docker image"
   - docker push registry.gitlab.com/karlazzam/$APP_NAME
-only:
-  changes:
-    - docker/Dockerfile
-    -.gitlab-ci.yml 
+  only:
+    changes:
+      - docker/Dockerfile
+      -.gitlab-ci.yml 
 
 
