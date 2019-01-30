@@ -3,7 +3,6 @@ services:
   - docker:dind
 variables:
   DOCKER_DRIVER: overlay
-  APP_NAME: REPLACE_ME
 stages:
   - build-docker
 docker_build:
@@ -15,12 +14,12 @@ docker_build:
   - cp -R target docker/target
   - cd target
   - SERVICE_NAME=$(find . -type f -name '*.jar' | cut -c 3- | rev | cut -c 14- | sed 's/-/:/' | rev);
-  - echo ${SERVICE_NAME}
+  - echo "Service name: " ${SERVICE_NAME}
   - cd ..
   - echo "Building docker image"
-  - docker build -t registry.gitlab.com/karlazzam/$APP_NAME ./docker
+  - docker build -t registry.gitlab.com/karlazzam/$SERVICE_NAME ./docker
   - echo "Pushing docker image"
-  - docker push registry.gitlab.com/karlazzam/$APP_NAME
+  - docker push registry.gitlab.com/karlazzam/$SERVICE_NAME
   only:
     changes:
       - pom.xml
