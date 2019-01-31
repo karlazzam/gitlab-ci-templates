@@ -9,6 +9,8 @@ maven_build:
   image: maven:latest
   stage: build-maven
   script:
+    -  git config --global user.email "karlazzam93@gmail.com"
+    -  git config --global user.name "karlazzam"
     - echo "Building project with maven"
     - "mvn -e -DGIT_USER=${GIT_USER} -DGIT_PW=${GIT_PW} -B release:clean release:prepare"
     - git commit -a -m "ci skip mvn:updating version"
