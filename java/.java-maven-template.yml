@@ -20,7 +20,6 @@ maven_build:
   retry: 2
   except:
     changes:
-      - .gitlab-ci.yml 
       - docker/**/*
       - deploy.tf
       - .gitnore
