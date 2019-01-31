@@ -23,5 +23,6 @@ docker_build:
   except:
     changes:
       - .gitlab-ci.yml 
+      - docker/**/*
 
 
