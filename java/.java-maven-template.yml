@@ -14,7 +14,6 @@ maven_build:
     - git config --local user.name "karlazzam"
     - echo "Building project with maven"
     - "mvn -e -DGIT_USER=${GIT_USER} -DGIT_PW=${GIT_PW} -B release:clean release:prepare"
-    - git commit -a -m "ci skip mvn:updating version"
   artifacts:
     paths:
       - target/*.jar
