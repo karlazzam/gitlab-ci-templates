@@ -23,4 +23,5 @@ maven_build:
       - .gitlab-ci.yml 
       - docker/**/*
       - *.tf
+      - .gitnore
 
