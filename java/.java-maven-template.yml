@@ -9,6 +9,7 @@ maven_build:
   image: maven:latest
   stage: build-maven
   script:
+    - git checkout -f master
     - git config --local user.email "karlazzam93@gmail.com"
     - git config --local user.name "karlazzam"
     - echo "Building project with maven"
