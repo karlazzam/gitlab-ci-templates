@@ -20,10 +20,8 @@ docker_build:
   - docker build -t registry.gitlab.com/karlazzam/$SERVICE_NAME ./docker
   - echo "Pushing docker image"
   - docker push registry.gitlab.com/karlazzam/$SERVICE_NAME
-  only:
+  except:
     changes:
-      - pom.xml
-      - docker/Dockerfile
       - .gitlab-ci.yml 
 
 
