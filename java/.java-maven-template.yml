@@ -22,6 +22,6 @@ maven_build:
     changes:
       - .gitlab-ci.yml 
       - docker/**/*
-      - *.tf
+      - deploy.tf
       - .gitnore
 
