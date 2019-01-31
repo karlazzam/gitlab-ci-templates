@@ -10,15 +10,14 @@ maven_build:
   stage: build-maven
   script:
     - git checkout -f master
-    - git config --local user.email "karlazzam93@gmail.com"
-    - git config --local user.name "karlazzam"
+    - git config --local user.email ${GIT_EMAIL}
+    - git config --local user.name ${GIT_USER}
     - echo "Building project with maven"
     - mvn -e -DGIT_USER=${GIT_USER} -DGIT_PW=${GIT_PW} -DscmCommentPrefix="[ci skip]" -B release:clean release:prepare
   artifacts:
     paths:
       - target/*.jar
   retry: 2
-  only:
+  except:
     changes:
-      - pom.xml
       - .gitlab-ci.yml 
