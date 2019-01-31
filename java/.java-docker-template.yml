@@ -13,8 +13,8 @@ docker_build:
   - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin registry.gitlab.com
   - cp -R target docker/target
   - cd target
-  - ls
-  - SERVICE_NAME=$(find . -type f -name '*.jar' | cut -c 3- | rev | cut -c 5- | sed 's/-/:/' | rev);
+  - #remove "./" and ".jar from SERVICE_NAME
+  - SERVICE_NAME=$(find . -type f -name '*.jar' | cut -c 3- | rev | cut -c 5- | sed 's/-/:/' | rev); 
   - echo "Service name:" ${SERVICE_NAME}
   - cd ..
   - echo "Building docker image"
