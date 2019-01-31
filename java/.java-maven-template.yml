@@ -13,7 +13,7 @@ maven_build:
     - git config --local user.email "karlazzam93@gmail.com"
     - git config --local user.name "karlazzam"
     - echo "Building project with maven"
-    - "mvn -e -DGIT_USER=${GIT_USER} -DGIT_PW=${GIT_PW} -DscmCommentPrefix="[ci skip]" -B release:clean release:prepare"
+    - mvn -e -DGIT_USER=${GIT_USER} -DGIT_PW=${GIT_PW} -DscmCommentPrefix="[ci skip]" -B release:clean release:prepare
   artifacts:
     paths:
       - target/*.jar
