@@ -22,7 +22,6 @@ docker_build:
   - docker push registry.gitlab.com/karlazzam/$SERVICE_NAME
   except:
     changes:
-      - .gitlab-ci.yml 
       - docker/**/*
       - deploy.tf
       - .gitnore
