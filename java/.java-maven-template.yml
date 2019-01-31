@@ -18,9 +18,9 @@ maven_build:
     paths:
       - target/*.jar
   retry: 2
-  except:
-    changes:
-      - docker/**/*
-      - deploy.tf
-      - .gitnore
+#   except:
+#     changes:
+#       - docker/**/*
+#       - deploy.tf
+#       - .gitnore
 
