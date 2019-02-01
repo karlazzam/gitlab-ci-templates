@@ -4,12 +4,12 @@ image:
     - '/usr/bin/env'
     - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 stages:
-  - plan ecs-cluster
-  - apply ecs-cluster
-  - destroy ecs-cluster
+  - plan-ecs-cluster
+  - apply-ecs-cluster
+  - destroy-ecs-cluster
 
-plan ecs-cluster:
-  stage: plan ecs-cluster
+plan_ecs_cluster:
+  stage: plan-ecs-cluster
   before_script:
   - rm -rf .terraform
   - terraform --version
@@ -21,8 +21,9 @@ plan ecs-cluster:
   artifacts:
     paths:
       - planfile
-apply ecs-cluster:
-  stage: apply ecs-cluster
+      
+apply_ecs_cluster:
+  stage: apply-ecs-cluster
   before_script:
   - rm -rf .terraform
   - terraform --version
@@ -32,11 +33,11 @@ apply ecs-cluster:
   script:
     - terraform apply -target module.ecs_cluster -input=false "planfile"
   dependencies:
-    - plan ecs-cluster
+    - plan_ecs_cluster
   when: manual
   
-destroy ecs-cluster:
-  stage: destroy ecs-cluster
+destroy_ecs_cluster:
+  stage: destroy-ecs-cluster
   before_script:
   - rm -rf .terraform
   - terraform --version
@@ -46,5 +47,5 @@ destroy ecs-cluster:
   script:
     - terraform destroy -input=false 
   dependencies:
-    - apply ecs-cluster
+    - apply_ecs_cluster
   when: manual

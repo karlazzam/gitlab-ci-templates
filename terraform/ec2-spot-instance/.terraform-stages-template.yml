@@ -4,12 +4,12 @@ image:
     - '/usr/bin/env'
     - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 stages:
-  - plan ec2-instance
-  - apply ec2-instance
-  - destroy ec2-instance
+  - plan-ec2-instance
+  - apply-ec2-instance
+  - destroy-ec2-instance
 
-plan ec2-instance:
-  stage: plan ec2-instance
+plan_ec2_instance:
+  stage: plan-ec2-instance
   before_script:
   - rm -rf .terraform
   - terraform --version
@@ -21,8 +21,9 @@ plan ec2-instance:
   artifacts:
     paths:
       - planfile
-apply ec2-instance:
-  stage: apply ec2-instance
+      
+apply_ec2_instance:
+  stage: apply-ec2-instance
   before_script:
   - rm -rf .terraform
   - terraform --version
@@ -32,11 +33,11 @@ apply ec2-instance:
   script:
     - terraform apply -target module.ec2_spot_cluster -input=false "planfile"
   dependencies:
-    - plan ec2-instance
+    - plan_ec2_instance
   when: manual
   
-destroy ec2-instance:
-  stage: destroy ec2-instance
+destroy_ec2_instance:
+  stage: destroy-ec2-instance
   before_script:
   - rm -rf .terraform
   - terraform --version
@@ -46,5 +47,5 @@ destroy ec2-instance:
   script:
     - terraform destroy -input=false 
   dependencies:
-    - apply ec2-instance
+    - apply_ec2_instance
   when: manual
