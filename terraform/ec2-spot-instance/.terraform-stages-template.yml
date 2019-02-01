@@ -35,7 +35,7 @@ apply ec2-instance:
     - plan ec2-instance
   when: manual
   
-destroy:
+destroy ec2-instance:
   stage: destroy ec2-instance
   before_script:
   - rm -rf .terraform
