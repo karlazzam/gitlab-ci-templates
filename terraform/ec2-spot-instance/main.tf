@@ -1,6 +1,3 @@
-######
-# EC2 spot instance
-######
 resource "aws_spot_instance_request" "this" {
   count = "${var.count}"
 
