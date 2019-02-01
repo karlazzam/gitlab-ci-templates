@@ -6,8 +6,7 @@ image:
 stages:
   - plan-ec2-instance
   - apply-ec2-instance
-  # - destroy-ec2-instance
-
+  
 plan_ec2_instance:
   stage: plan-ec2-instance
   before_script:
@@ -35,17 +34,3 @@ apply_ec2_instance:
   dependencies:
     - plan_ec2_instance
   when: manual
-  
-# destroy_ec2_instance:
-#   stage: destroy-ec2-instance
-#   before_script:
-#   - rm -rf .terraform
-#   - terraform --version
-#   - export AWS_ACCESS_KEY_ID=$ACCESS_KEY
-#   - export AWS_SECRET_ACCESS_KEY=$SECRET_KEY
-#   - terraform init
-#   script:
-#     - terraform destroy -input=false 
-#   dependencies:
-#     - apply_ec2_instance
-#   when: manual
