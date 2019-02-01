@@ -8,7 +8,7 @@ stages:
   - apply ec2-instance
   - destroy ec2-instance
 
-plan:ec2-instance
+plan ec2-instance:
   stage: plan ec2-instance
   before_script:
   - rm -rf .terraform
@@ -21,7 +21,7 @@ plan:ec2-instance
   artifacts:
     paths:
       - planfile
-apply:ec2-instance
+apply ec2-instance:
   stage: apply ec2-instance
   before_script:
   - rm -rf .terraform
@@ -32,10 +32,10 @@ apply:ec2-instance
   script:
     - terraform apply -target module.ec2_spot_cluster -input=false "planfile"
   dependencies:
-    - plan:ec2-instance
+    - plan ec2-instance
   when: manual
   
-destroy:ec2-instance
+destroy:
   stage: destroy ec2-instance
   before_script:
   - rm -rf .terraform
@@ -46,7 +46,5 @@ destroy:ec2-instance
   script:
     - terraform destroy -input=false 
   dependencies:
-    - apply:ec2-instance
+    - apply ec2-instance
   when: manual
-  
-  

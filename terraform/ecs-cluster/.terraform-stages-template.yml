@@ -8,7 +8,7 @@ stages:
   - apply ecs-cluster
   - destroy ecs-cluster
 
-plan:ecs-cluster
+plan ecs-cluster:
   stage: plan ecs-cluster
   before_script:
   - rm -rf .terraform
@@ -21,7 +21,7 @@ plan:ecs-cluster
   artifacts:
     paths:
       - planfile
-apply:ecs-cluster
+apply ecs-cluster:
   stage: apply ecs-cluster
   before_script:
   - rm -rf .terraform
@@ -32,10 +32,10 @@ apply:ecs-cluster
   script:
     - terraform apply -target module.ecs_cluster -input=false "planfile"
   dependencies:
-    - plan:ecs-cluster
+    - plan ecs-cluster
   when: manual
   
-destroy:ecs-cluster
+destroy ecs-cluster:
   stage: destroy ecs-cluster
   before_script:
   - rm -rf .terraform
@@ -46,7 +46,5 @@ destroy:ecs-cluster
   script:
     - terraform destroy -input=false 
   dependencies:
-    - apply:secs-cluster
+    - apply ecs-cluster
   when: manual
-  
-  
