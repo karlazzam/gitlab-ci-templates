@@ -16,10 +16,10 @@ plan_ec2_instance:
   - export AWS_SECRET_ACCESS_KEY=$SECRET_KEY
   - terraform init
   script:
-    - terraform plan -target module.ec2_spot_cluster -out "planfile"
+    - terraform plan -target module.ec2_spot_cluster -out "planfile-ec2"
   artifacts:
     paths:
-      - planfile
+      - planfile-ec2
       
 apply_ec2_instance:
   stage: apply-ec2-instance
@@ -30,7 +30,7 @@ apply_ec2_instance:
   - export AWS_SECRET_ACCESS_KEY=$SECRET_KEY
   - terraform init
   script:
-    - terraform apply -target module.ec2_spot_cluster -input=false "planfile"
+    - terraform apply -target module.ec2_spot_cluster -input=false "planfile-ec2"
   dependencies:
     - plan_ec2_instance
   when: manual

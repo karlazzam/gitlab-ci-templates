@@ -16,10 +16,10 @@ plan_ecs_cluster:
   - export AWS_SECRET_ACCESS_KEY=$SECRET_KEY
   - terraform init
   script:
-    - terraform plan -target module.ecs_cluster -out "planfile"
+    - terraform plan -target module.ecs_cluster -out "cluster-planfile"
   artifacts:
     paths:
-      - planfile
+      - cluster-planfile
       
 apply_ecs_cluster:
   stage: apply-ecs-cluster
@@ -30,7 +30,7 @@ apply_ecs_cluster:
   - export AWS_SECRET_ACCESS_KEY=$SECRET_KEY
   - terraform init
   script:
-    - terraform apply -target module.ecs_cluster -input=false "planfile"
+    - terraform apply -target module.ecs_cluster -input=false "cluster-planfile"
   dependencies:
     - plan_ecs_cluster
   when: manual
