@@ -12,7 +12,6 @@
   only:
     refs:
       - develop
-
 .terraform_prod_template: &terraform_prod_template
   before_script:
     - rm -rf .terraform
@@ -53,7 +52,6 @@ plan_vpc_prod:
   artifacts:
     paths:
       - planfile-vpc
-
 
 apply_vpc_dev:
   stage: apply-vpc
