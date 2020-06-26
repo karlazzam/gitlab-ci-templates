@@ -4,11 +4,11 @@ image:
     - '/usr/bin/env'
     - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 stages:
-  - plan-ec2-instance
-  - apply-ec2-instance
-  
-plan_ec2_instance:
-  stage: plan-ec2-instance
+  - plan_vpc
+  - apply_vpc
+
+plan_vpc:
+  stage: plan_vpc
   before_script:
   - rm -rf .terraform
   - terraform --version
@@ -16,13 +16,13 @@ plan_ec2_instance:
   - export AWS_SECRET_ACCESS_KEY=$SECRET_KEY
   - terraform init
   script:
-    - terraform plan -target module.ec2_spot_cluster -out "planfile-ec2"
+    - terraform plan -target module.vpc -out "planfile-vpc"
   artifacts:
     paths:
-      - planfile-ec2
-      
-apply_ec2_instance:
-  stage: apply-ec2-instance
+      - planfile-vpc
+
+apply_vpc:
+  stage: apply_vpc
   before_script:
   - rm -rf .terraform
   - terraform --version
@@ -30,7 +30,7 @@ apply_ec2_instance:
   - export AWS_SECRET_ACCESS_KEY=$SECRET_KEY
   - terraform init
   script:
-    - terraform apply -target module.ec2_spot_cluster -input=false "planfile-ec2"
+    - terraform apply -target module.vpc -input=false "planfile-vpc"
   dependencies:
-    - plan_ec2_instance
+    - plan_vpc
   when: manual
