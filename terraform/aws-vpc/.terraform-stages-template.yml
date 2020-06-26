@@ -2,7 +2,7 @@
 .terraform_dev_template: &terraform_dev_template
   before_script:
     - rm -rf .terraform
-    - mv dev/deploy.tf deploy.tf
+    - mv dev/terraform/deploy.tf deploy.tf
     - terraform --version
     - export AWS_ACCESS_KEY_ID=$ACCESS_KEY
     - export AWS_SECRET_ACCESS_KEY=$SECRET_KEY
@@ -12,10 +12,11 @@
   only:
     refs:
       - develop
+
 .terraform_prod_template: &terraform_prod_template
   before_script:
     - rm -rf .terraform
-    - mv prod/deploy.tf deploy.tf
+    - mv prod/terraform/deploy.tf deploy.tf
     - terraform --version
     - export AWS_ACCESS_KEY_ID=$ACCESS_KEY
     - export AWS_SECRET_ACCESS_KEY=$SECRET_KEY
