@@ -9,7 +9,7 @@ stages:
   - apply-vpc
 
 setup_deploy_tf_prod:
-  stage: setup_deploy_tf
+  stage: setup-deploy-tf
   script:
     - mv prod/deploy.tf deploy.tf
   only:
@@ -17,7 +17,7 @@ setup_deploy_tf_prod:
       - master
 
 setup_deploy_tf_dev:
-  stage: setup_deploy_tf
+  stage: setup-deploy-tf
   script:
     - mv dev/deploy.tf deploy.tf
   only:
@@ -25,7 +25,7 @@ setup_deploy_tf_dev:
       - develop
 
 plan_vpc_dev:
-  stage: plan_vpc
+  stage: plan-vpc
   before_script:
   - rm -rf .terraform
   - terraform --version
@@ -41,7 +41,7 @@ plan_vpc_dev:
       - planfile-vpc
 
 plan_vpc_prod:
-  stage: plan_vpc
+  stage: plan-vpc
   before_script:
   - rm -rf .terraform
   - terraform --version
@@ -57,7 +57,7 @@ plan_vpc_prod:
       - planfile-vpc
 
 apply_vpc_dev:
-  stage: apply_vpc
+  stage: apply-vpc
   before_script:
   - rm -rf .terraform
   - terraform --version
@@ -69,11 +69,11 @@ apply_vpc_dev:
   environment:
     name: dev
   dependencies:
-    - plan_vpc
+    - plan_vpc_dev
   when: manual
 
 apply_vpc_prod:
-  stage: apply_vpc
+  stage: apply-vpc
   before_script:
   - rm -rf .terraform
   - terraform --version
@@ -85,5 +85,5 @@ apply_vpc_prod:
   environment:
     name: prod
   dependencies:
-    - plan_vpc
+    - plan_vpc_prod
   when: manual
