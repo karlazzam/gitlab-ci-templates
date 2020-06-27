@@ -6,7 +6,7 @@ module "vpc" {
 resource "aws_security_group" "ec2-sg" {
   name        = "vpc-sg"
   description = "Allow ssh, http, and https access from your local ip address to the ec2 instance"
-  vpc_id      = data.terraform_remote_state.vpc.outputs.vpc_id
+  vpc_id      = data.terraform_remote_state.vpc.remote.vpc_id
 
   ingress {
     description = "SSH access from my ip address"
@@ -73,7 +73,7 @@ resource "aws_instance" "ec2_instance" {
   key_name             = var.keypair_name
   iam_instance_profile = aws_iam_instance_profile.ec2-attach-profile.name
 
-  subnet_id                   = data.terraform_remote_state.vpc.outputs.public_subnets[0]
+  subnet_id                   = data.terraform_remote_state.vpc.remote.public_subnets[0]
   vpc_security_group_ids      = [aws_security_group.ec2-sg.id]
   associate_public_ip_address = true
 
