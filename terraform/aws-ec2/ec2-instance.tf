@@ -1,7 +1,3 @@
-module "vpc" {
-  source = "git::https://github.com/karlazzam/gitlab-ci-templates.git//terraform//aws-vpc"
-}
-
 data "terraform_remote_state" "vpc" {
   backend = "s3"
 
