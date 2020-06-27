@@ -46,7 +46,7 @@ plan_vpc_dev:
   artifacts:
     paths:
       - planfile-vpc
-when: always
+  when: always
 
 plan_vpc_prod:
   stage: plan-vpc
@@ -56,7 +56,7 @@ plan_vpc_prod:
   artifacts:
     paths:
       - planfile-vpc
-when: always
+  when: always
 
 apply_vpc_dev:
   stage: apply-vpc
@@ -65,7 +65,7 @@ apply_vpc_dev:
     - terraform apply -target module.vpc -input=false "planfile-vpc"
   dependencies:
     - plan_vpc_dev
-when: on_success
+  when: on_success
 
 apply_vpc_prod:
   stage: apply-vpc
@@ -74,4 +74,4 @@ apply_vpc_prod:
     - terraform apply -target module.vpc -input=false "planfile-vpc"
   dependencies:
     - plan_vpc_prod
-when: on_success
+  when: on_success
