@@ -44,6 +44,7 @@ plan_ec2_dev:
   artifacts:
     paths:
       - planfile-ec2
+  when: on_success
 
 plan_ec2_prod:
   stage: plan-ec2
@@ -53,6 +54,7 @@ plan_ec2_prod:
   artifacts:
     paths:
       - planfile-ec2
+  when: on_success
 
 apply_ec2_dev:
   stage: apply-ec2
@@ -61,6 +63,7 @@ apply_ec2_dev:
     - terraform apply -target module.ec2_instance -input=false "planfile-ec2"
   dependencies:
     - plan_ec2_dev
+  when: on_success
 
 apply_ec2_prod:
   stage: apply-ec2
@@ -69,3 +72,4 @@ apply_ec2_prod:
     - terraform apply -target module.ec2_instance -input=false "planfile-ec2"
   dependencies:
     - plan_ec2_prod
+  when: on_success
