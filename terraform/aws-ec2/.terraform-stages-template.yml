@@ -1,0 +1,73 @@
+---
+.terraform_dev_template: &terraform_dev_template
+  before_script:
+    - rm -rf .terraform
+    - mv dev/terraform/deploy.tf deploy.tf
+    - terraform --version
+    - export AWS_ACCESS_KEY_ID=$ACCESS_KEY
+    - export AWS_SECRET_ACCESS_KEY=$SECRET_KEY
+    - terraform init
+  environment:
+    name: dev
+  only:
+    refs:
+      - develop
+
+.terraform_prod_template: &terraform_prod_template
+  before_script:
+    - rm -rf .terraform
+    - mv prod/terraform/deploy.tf deploy.tf
+    - terraform --version
+    - export AWS_ACCESS_KEY_ID=$ACCESS_KEY
+    - export AWS_SECRET_ACCESS_KEY=$SECRET_KEY
+    - terraform init
+  environment:
+    name: prod
+  only:
+    refs:
+      - master
+
+image:
+  name: hashicorp/terraform:light
+  entrypoint:
+    - '/usr/bin/env'
+    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+stages:
+  - plan-ec2
+  - apply-ec2
+
+plan_ec2_dev:
+  stage: plan-ec2
+  <<: *terraform_dev_template
+  script:
+    - terraform plan -target aws_instance.ec2_instance -out "planfile-ec2"
+  artifacts:
+    paths:
+      - planfile-ec2
+
+plan_ec2_prod:
+  stage: plan-ec2
+  <<: *terraform_prod_template
+  script:
+    - terraform plan -target aws_instance.ec2_instance -out "planfile-ec2"
+  artifacts:
+    paths:
+      - planfile-ec2
+
+apply_ec2_dev:
+  stage: apply-ec2
+  <<: *terraform_dev_template
+  script:
+    - terraform apply -target aws_instance.ec2_instance -input=false "planfile-ec2"
+  dependencies:
+    - plan_ec2_dev
+  when: manual
+
+apply_ec2_prod:
+  stage: apply-ec2
+  <<: *terraform_prod_template
+  script:
+    - terraform apply -target aws_instance.ec2_instance -input=false "planfile-ec2"
+  dependencies:
+    - plan_ec2_prod
+  when: manual
