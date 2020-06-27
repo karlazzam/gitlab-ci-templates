@@ -12,7 +12,7 @@
     name: dev
   only:
     refs:
-      - master
+      - develop
 
 .terraform_prod_template: &terraform_prod_template
   before_script:
@@ -27,7 +27,7 @@
     name: prod
   only:
     refs:
-      - develop
+      - master
 
 image:
   name: hashicorp/terraform:light
