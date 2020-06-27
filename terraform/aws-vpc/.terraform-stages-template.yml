@@ -61,7 +61,6 @@ apply_vpc_dev:
     - terraform apply -target module.vpc -input=false "planfile-vpc"
   dependencies:
     - plan_vpc_dev
-  when: manual
 
 apply_vpc_prod:
   stage: apply-vpc
@@ -70,4 +69,3 @@ apply_vpc_prod:
     - terraform apply -target module.vpc -input=false "planfile-vpc"
   dependencies:
     - plan_vpc_prod
-  when: manual

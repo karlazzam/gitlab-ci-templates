@@ -61,7 +61,6 @@ apply_ec2_dev:
     - terraform apply -target aws_instance.ec2_instance -input=false "planfile-ec2"
   dependencies:
     - plan_ec2_dev
-  when: manual
 
 apply_ec2_prod:
   stage: apply-ec2
@@ -70,4 +69,3 @@ apply_ec2_prod:
     - terraform apply -target aws_instance.ec2_instance -input=false "planfile-ec2"
   dependencies:
     - plan_ec2_prod
-  when: manual
