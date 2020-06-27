@@ -15,15 +15,15 @@ variable "bucket_name" {
 }
 
 variable "key_name" {
-  type         = string
-  descrieption = "Key name to get remote state for vpc"
-  default      = "REPLACE_ME"
+  type        = string
+  description = "Key name to get remote state for vpc"
+  default     = "REPLACE_ME"
 }
 
 variable "region" {
-  type         = string
-  descrieption = "Region to get remote state for vpc"
-  default      = "REPLACE_ME"
+  type        = string
+  description = "Region to get remote state for vpc"
+  default     = "REPLACE_ME"
 }
 
 variable "new_ssh_port" {
