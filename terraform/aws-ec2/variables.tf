@@ -5,7 +5,27 @@ locals {
 variable "my_ip_address" {
   type        = string
   description = "my local ip address needed to apply security group inbound rules for access to the instance locally"
+  default     = "REPLACE_ME"
 }
+
+variable "bucket_name" {
+  type        = string
+  description = "Bucket name to get remote state for vpc"
+  default     = "REPLACE_ME"
+}
+
+variable "key_name" {
+  type         = string
+  descrieption = "Key name to get remote state for vpc"
+  default      = "REPLACE_ME"
+}
+
+variable "region" {
+  type         = string
+  descrieption = "Region to get remote state for vpc"
+  default      = "REPLACE_ME"
+}
+
 variable "new_ssh_port" {
   type    = number
   default = 22
