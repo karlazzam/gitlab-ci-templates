@@ -81,12 +81,12 @@ destroy_vpc_dev:
   stage: destroy-vpc
   <<: *terraform_dev_template
   script:
-    - terraform destroy -target module.vpc -input=false
+    - terraform destroy -target module.vpc -force
   when: manual
 
 destroy_vpc_prod:
   stage: destroy-vpc
   <<: *terraform_prod_template
   script:
-    - terraform destroy -target module.vpc -input=false
+    - terraform destroy -target module.vpc -force
   when: manual

@@ -79,12 +79,12 @@ destroy_ec2_dev:
   stage: destroy-ec2
   <<: *terraform_dev_template
   script:
-    - terraform destroy -target module.ec2_instance -input=false
+    - terraform destroy -target module.ec2_instance -force
   when: manual
 
 destroy_ec2_prod:
   stage: destroy-ec2
   <<: *terraform_prod_template
   script:
-    - terraform destroy -target module.ec2_instance -input=false
+    - terraform destroy -target module.ec2_instance -force
   when: manual
