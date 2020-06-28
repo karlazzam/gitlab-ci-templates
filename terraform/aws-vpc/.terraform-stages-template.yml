@@ -35,6 +35,7 @@ image:
     - '/usr/bin/env'
     - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 stages:
+  - destroy-vpc
   - plan-vpc
   - apply-vpc
 
@@ -75,3 +76,17 @@ apply_vpc_prod:
   dependencies:
     - plan_vpc_prod
   when: on_success
+
+destroy_vpc_dev:
+  stage: destroy-vpc
+  <<: *terraform_dev_template
+  script:
+    - terraform destroy -target module.vpc -input=false
+  when: manual
+
+destroy_vpc_prod:
+  stage: destroy-vpc
+  <<: *terraform_prod_template
+  script:
+    - terraform destroy -target module.vpc -input=false
+  when: manual

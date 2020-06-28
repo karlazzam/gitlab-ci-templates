@@ -33,6 +33,7 @@ image:
     - '/usr/bin/env'
     - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 stages:
+  - destroy-ec2
   - plan-ec2
   - apply-ec2
 
@@ -73,3 +74,17 @@ apply_ec2_prod:
   dependencies:
     - plan_ec2_prod
   when: on_success
+
+destroy_ec2_dev:
+  stage: destroy-ec2
+  <<: *terraform_dev_template
+  script:
+    - terraform destroy -target module.ec2_instance -input=false
+  when: manual
+
+destroy_ec2_prod:
+  stage: destroy-ec2
+  <<: *terraform_prod_template
+  script:
+    - terraform destroy -target module.ec2_instance -input=false
+  when: manual
