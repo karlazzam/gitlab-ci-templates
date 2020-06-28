@@ -8,9 +8,8 @@ data "terraform_remote_state" "vpc" {
   }
 }
 
-
 resource "aws_security_group" "ec2-sg" {
-  name        = "vpc-sg"
+  name        = var.sg_name
   description = "Allow ssh, http, and https access from your local ip address to the ec2 instance"
   vpc_id      = data.terraform_remote_state.vpc.outputs.vpc_id
 
@@ -68,6 +67,7 @@ resource "aws_security_group" "ec2-sg" {
     Name        = var.application_name
   }
 }
+
 resource "aws_iam_instance_profile" "ec2-attach-profile" {
   name = "ec2-attach-profile"
   role = var.iam_role_name

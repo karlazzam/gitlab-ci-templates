@@ -76,6 +76,11 @@ variable "route_53_primary_zone_id" {
   default = "my-primary-zone"
 }
 
+variable "sg_name" {
+  type    = string
+  default = "my-sg-name"
+}
+
 variable "env_name" {
   type    = string
   default = "prod"
