@@ -14,11 +14,11 @@ resource "aws_security_group" "ec2-sg" {
   vpc_id      = data.terraform_remote_state.vpc.outputs.vpc_id
 
   ingress {
-    description = "SSH access from my ip address"
+    description = "SSH port open to everyone to allow ansible to ssh into the instance with the pem key"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [local.my_ip_cidr]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
