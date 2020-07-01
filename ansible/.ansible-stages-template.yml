@@ -1,0 +1,42 @@
+---
+.ansible_template: &ansible_template
+  image: geerlingguy/docker-centos7-ansible:latest
+  stage: run-ansible
+  before_script:
+    - export ANSIBLE_HOST_KEY_CHECKING=False
+    - ansible --version
+    - mkdir ~/.ssh
+    - cat "$PRIV_KEY_PEM" >> ~/.ssh/priv_key.pem
+    - chmod 400 ~/.ssh/priv_key.pem
+    - yum install git -y -q
+    - git clone https://$GIT_USER:$GIT_PW@github.com/karlazzam/gitlab-ansible-setup-playbook # Fetch playbook to configure container to run ansible with all requirements
+    - cd gitlab-ansible-setup-playbook # Copy playbook to configure container to run ansible with all requirements
+    - ansible-playbook main.yml --extra-vars "ACCESS_KEY=$ACCESS_KEY SECRET_KEY=$SECRET_KEY AWS_REGION=$AWS_REGION S3_REQ_YML_KEY_PATH=$S3_REQ_YML_KEY_PATH"
+    - eval `ssh-agent -s`
+    - ssh-add ~/.ssh/priv_key.pem
+    - cd .. && cp -a -n playbook/. . # Copy main playbook into current directory so we can run it
+
+stages:
+  - run-ansible
+
+run_ansible_dev:
+  <<: *ansible_template
+  script:
+    - ansible-playbook -i inventory/dev_aws_ec2.yml main.yml  --extra-vars "ENV=dev"
+  when: on_success
+  environment:
+    name: dev
+  only:
+    refs:
+      - develop
+
+run_ansible_prod:
+  <<: *ansible_template
+  script:
+    - ansible-playbook -i inventory/prod_aws_ec2.yml main.yml  --extra-vars "ENV=prod"
+  when: on_success
+  environment:
+    name: prod
+  only:
+    refs:
+      - master
