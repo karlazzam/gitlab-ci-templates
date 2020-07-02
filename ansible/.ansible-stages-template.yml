@@ -38,4 +38,4 @@ run_ansible_prod:
     name: prod
   only:
     refs:
-      - prod
+      - master
