@@ -1,20 +1,37 @@
-image: docker:latest
-services:
-  - docker:dind
-variables:
-  DOCKER_DRIVER: overlay
-stages:
-  - build-maven
-maven_build:
+.maven_template: &maven_template
   image: maven:latest
   stage: build-maven
   script:
-    - git checkout -f master
+   - if [ "$env" == "prod" ]; then command="-B release:clean release:prepare"; else command="clean install"; fi
     - git config --local user.email ${GIT_EMAIL}
     - git config --local user.name ${GIT_USER}
     - echo "Building project with maven"
-    - mvn -e -DGIT_USER=${GIT_USER} -DGIT_PW=${GIT_PW} -DscmCommentPrefix="[ci skip]" -B release:clean release:prepare
+    - mvn -e -DGIT_USER=${GIT_USER} -DGIT_PW=${GIT_PW} -DscmCommentPrefix="[ci skip]" ${command}
   artifacts:
     paths:
-      - target/*.jar
+      - docker/*.jar
   retry: 2
+  when: on_success
+
+stages:
+  - build-maven
+
+maven_build_dev:
+  before_script:
+    - git checkout -f develop
+  <<: *maven_template
+  environment:
+    name: dev
+  only:
+    refs:
+      - develop
+
+maven_build_prod:
+  before_script:
+    - git checkout -f master
+  <<: *maven_template
+  environment:
+    name: prod
+  only:
+    refs:
+      - master

@@ -15,6 +15,7 @@
     - eval `ssh-agent -s`
     - ssh-add ~/.ssh/priv_key.pem
     - cd .. && cp -a -n playbook/. . # Copy main playbook into current directory so we can run it
+  when: on_success
 
 stages:
   - run-ansible
@@ -23,7 +24,6 @@ run_ansible_dev:
   <<: *ansible_template
   script:
     - ansible-playbook -i inventory/dev_aws_ec2.yml main.yml  --extra-vars "ENV=dev"
-  when: on_success
   environment:
     name: dev
   only:
@@ -34,9 +34,8 @@ run_ansible_prod:
   <<: *ansible_template
   script:
     - ansible-playbook -i inventory/prod_aws_ec2.yml main.yml  --extra-vars "ENV=prod"
-  when: on_success
   environment:
     name: prod
   only:
     refs:
-      - master
+      - prod
